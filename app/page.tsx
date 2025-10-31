@@ -1,13 +1,14 @@
 'use client'
 import { Button } from "@/components/ui/button";
 import Start from "@/components/start";
-import { useState, useLayoutEffect} from "react";
+import { useState, useLayoutEffect } from "react";
 import { ImageType } from "@/lib/types";
 import axios from "axios";
-import {baseURL} from "@/lib/types";
+import { baseURL } from "@/lib/types";
 import { CardContent } from "@/components/ui/card";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import Images from "./images/page";
+import HomeImages from "../components/homeImages";
+import HomeCollection from "../components/homeCollections"
 
 export default function Home() {
 
@@ -37,12 +38,14 @@ export default function Home() {
 
 
   return (
-    <div>
-      {!showHome ? ( <Start setShowHome={setShowHome} />
-      ) : (
-        <Images images={images}/>
-      )}
-    </div>
+    // <div>
+    //   {!showHome ? (<Start setShowHome={setShowHome} />
+    //   ) : (
+    //     // <HomeImages images={images} />
+    //     <HomeCollection />
+    //   )}
+    // </div>
+    <HomeCollection />
 
 
   );

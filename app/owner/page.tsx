@@ -1,8 +1,6 @@
 'use client'
 
 import { Card, CardContent} from "@/components/ui/card"
-import { Button } from "@/components/ui/button";
-import {FolderPlus, ImagePlus} from "lucide-react";
 import Image  from "next/image";
 import {baseURL, Collection} from "@/lib/types";
 import { useEffect, useState } from "react";

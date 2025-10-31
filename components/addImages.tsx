@@ -96,7 +96,7 @@ export default function AddImages({collection, images, setImages} : {collection:
                     !hasUploads ? (
                       <DropzoneContent className="size-[20rem]" />
                     ) : (
-                      <div className="w-3/4 grid grid-cols-2 lg:grid-cols-4 xl:grid-cols-6 gap-2 lg:gap-6 overflow-auto no-scrollbar">
+                      <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-2 lg:gap-4 overflow-auto no-scrollbar">
                         {hasUploads && (
                           previews.map((preview, index) => (
                             <AspectRatio ratio={1/1} key={index}>
@@ -116,7 +116,7 @@ export default function AddImages({collection, images, setImages} : {collection:
                 <Field className="w-1/2 items-center justify-center">
                   <div className="w-1/4 flex justify-between">
                     <Button variant="secondary" className="w-1/3" onClick={handleCancel}>Clear</Button>
-                    <Button className="w-1/3" disabled={!hasUploads} onClick={handleSubmit}>Submit</Button>
+                    <Button className="w-1/3" disabled={!hasUploads} onClick={handleSubmit}>Upload</Button>
                   </div>
 
                 </Field>

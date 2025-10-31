@@ -3,11 +3,11 @@ import { use } from 'react'
 
 import Image from 'next/image'
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { CardContent } from "@/components/ui/card";
 import { baseURL, ImageType } from "@/lib/types";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AddImages from '@/components/addImages';
+import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
 
 export default function Page({
   params,
@@ -29,6 +29,16 @@ export default function Page({
     }
   };
 
+  let delConfig = {
+    method: 'delete',
+    maxBodyLength: Infinity,
+    url: `${baseURL}/photos/`,
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    data: ''
+  };
+
   useEffect(() => {
     const fetchImages = async () => {
       try {
@@ -42,6 +52,21 @@ export default function Page({
     fetchImages();
   }, [])
 
+  const handleDeleteImage = async(name: string) => {
+
+    delConfig.data = JSON.stringify({
+      "name": name
+    });
+
+    try {
+      const response = await axios.request(delConfig);
+      console.log(response.data);
+      setImages(images.filter((image) => image.name !== name));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <div className="relative flex flex-col items-center p-4 w-full">
       <div className="text-xl md:text-2xl lg:text-4xl font-bold pt-2 pb-4">
@@ -49,9 +74,18 @@ export default function Page({
       </div>
       <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
         {images.map((image) => (
-          <AspectRatio ratio={1/1} key={image.id} className="bg-stone-300 hover:shadow-lg">
-            <Image src={image.url} alt={`${image.name} photo`} fill className="object-contain p-2" quality={100}/>
-          </AspectRatio>
+          <ContextMenu key={image.id}>
+            <ContextMenuTrigger>
+              <AspectRatio ratio={1/1} className="bg-stone-300 hover:shadow-lg">
+                <Image src={image.url} alt={`${image.name} photo`} fill className="object-contain p-2" quality={100}/>
+              </AspectRatio>
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem onSelect={() => handleDeleteImage(image.name)}>
+                Delete
+              </ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
       ))}
     </div>
     <div className="fixed right-[6vw] sm:right-[4vw] bottom-[8vw]  sm:bottom-[4vw]">
