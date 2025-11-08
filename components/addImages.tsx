@@ -49,6 +49,7 @@ export default function AddImages({collection, images, setImages} : {collection:
     for (const file of files) {
       formData.append('files', file, file.name);
     }
+    formData.append('num_photos', `${images.length}`); 
 
     try {
       const response = await axios.post(`${baseURL}/photos/${collection}`, formData, {

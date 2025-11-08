@@ -55,7 +55,9 @@ export default function Page({
   const handleDeleteImage = async(name: string) => {
 
     delConfig.data = JSON.stringify({
-      "name": name
+      "name": name,
+      "collection": collectionName,
+      "num_photos": images.length
     });
 
     try {
