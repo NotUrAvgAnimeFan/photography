@@ -8,6 +8,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import AddImages from '@/components/addImages';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
+import getToken from '../get_token';
+
 
 export default function Page({
   params,
@@ -17,6 +19,7 @@ export default function Page({
   const {collection} = use(params)
   const collectionName = collection.replaceAll('_', ' ')
 
+  const [token, setToken] = useState<string>("");
   const [images, setImages] = useState<ImageType[]>([]);
 
 
@@ -25,7 +28,8 @@ export default function Page({
     maxBodyLength: Infinity,
     url: `${baseURL}/photos/${collection}`,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     }
   };
 
@@ -45,6 +49,11 @@ export default function Page({
         const response = await axios.request(config);
         const photos: ImageType[] = response.data as ImageType[];
         setImages(photos);
+
+        const bearer = await getToken();
+        if (bearer) {
+          setToken(bearer);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -91,7 +100,7 @@ export default function Page({
       ))}
     </div>
     <div className="fixed right-[6vw] sm:right-[4vw] bottom-[8vw]  sm:bottom-[4vw]">
-      <AddImages collection={collection} images={images} setImages={setImages}/>
+      <AddImages token={token} collection={collection} images={images} setImages={setImages}/>
     </div>
   </div>
   )

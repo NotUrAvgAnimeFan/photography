@@ -10,33 +10,37 @@ import {
   FieldSet,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import axios from "axios";
-import { useState } from "react";
-import makeRequest from "./login_functions";
+import { useEffect, useState } from "react";
+import loginAction from "./login_functions";
+import { useRouter } from 'next/navigation';
+import {toast} from 'sonner'
 
 
 export default function LoginPage() {
 
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const router = useRouter();
 
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await makeRequest(username, password);
+    const response = await loginAction(username, password);
+
+
+    if (response === 1) {
+      router.push('/owner');
+    } else {
+      toast.error("incorrect credentials");
+    }
+
   }
-
-
-
-
-
-
 
 
   return (
     <div className="relative flex flex-col items-center p-4 w-full h-screen">
       <div className="flex flex-col justify-center w-full max-w-md mt-10 h-3/5">
-        <form>
+        <form onSubmit={handleSubmit}>
           <FieldSet>
             <FieldGroup>
               <Field>
@@ -49,9 +53,8 @@ export default function LoginPage() {
               </Field>
               <FieldSeparator />
               <Field orientation="responsive">
-                <Button type="submit" onClick={handleSubmit}>Login</Button>
+                <Button type="submit">Login</Button>
               </Field>
-
             </FieldGroup>
 
           </FieldSet>

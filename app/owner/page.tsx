@@ -9,12 +9,15 @@ import { AspectRatio } from "@radix-ui/react-aspect-ratio";
 import { NewCollectionButton } from "@/components/newCollection";
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from "@/components/ui/context-menu";
 import Link from "next/link";
-
+import getToken from "./get_token";
 
 
 export default function OwnerPage() {
 
+
+
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [token, setToken] = useState<string>("");
 
   let config = {
     method: 'get',
@@ -28,7 +31,8 @@ export default function OwnerPage() {
     maxBodyLength: Infinity,
     url: `${baseURL}/collections/`,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
     data: ''
   };
@@ -39,6 +43,12 @@ export default function OwnerPage() {
         const response = await axios.request(config);
         const fetched_collections: Collection[] = response.data as Collection[];
         setCollections(fetched_collections);
+
+        const bearer = await getToken();
+        if (bearer) {
+          setToken(bearer);
+        }
+
       } catch (error) {
         console.log(error);
       }
@@ -64,7 +74,7 @@ export default function OwnerPage() {
     <div className="flex flex-col items-center p-8 w-full">
       <div className="flex justify-between items-center w-full sm:w-3/4 mb-8">
         <h1 className="text-3xl font-bold">My Collections</h1>
-        <NewCollectionButton collections={collections} setCollections={setCollections}/>
+        <NewCollectionButton token={token} collections={collections} setCollections={setCollections}/>
       </div>
       <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {collections.map((collection) => (

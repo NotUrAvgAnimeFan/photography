@@ -16,9 +16,9 @@ import axios from "axios"
 import { FolderPlus } from "lucide-react"
 import { useState } from "react"
 
-export function NewCollectionButton({collections, setCollections}: {collections: Collection[], setCollections: React.Dispatch<React.SetStateAction<Collection[]>>}) {
+export function NewCollectionButton({token, collections, setCollections}: {token: string, collections: Collection[], setCollections: React.Dispatch<React.SetStateAction<Collection[]>>}) {
 
-  const [collectionName, setCollectionName] =  useState('');
+  const [collectionName, setCollectionName] =  useState('Sample');
   const [collectionDescription, setCollectionDescription] = useState('');
 
   let config = {
@@ -26,7 +26,8 @@ export function NewCollectionButton({collections, setCollections}: {collections:
     maxBodyLength: Infinity,
     url: `${baseURL}/collections`,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
     data: JSON.stringify({
       "name": collectionName,

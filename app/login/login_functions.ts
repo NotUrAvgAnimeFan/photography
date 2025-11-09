@@ -4,11 +4,13 @@ import axios from 'axios';
 import {cookies} from 'next/headers'
 
 
-export default async function makeRequest(username: string, password: string) {
+export default async function loginAction(username: string, password: string) {
     let data = JSON.stringify({
       "username": username,
       "password": password
     });
+
+    console.log(data);
 
     let config = {
       method: 'post',
@@ -23,20 +25,25 @@ export default async function makeRequest(username: string, password: string) {
 
     try {
       const response = await axios.request(config);
-      const cookieStore = await cookies();
-      console.log(response.data["access_token"]);
+      if (response.data["access_token"]) {
+        const cookieStore = await cookies();
+        console.log(response.data["access_token"]);
 
-      cookieStore.set({
-        name: 'bearer',
-        value: response.data["access_token"],
-        httpOnly: true,
-        secure: true,
-        path: '/',
-      })
-
-
+        cookieStore.set({
+          name: 'bearer',
+          value: response.data["access_token"],
+          httpOnly: true,
+          secure: true,
+          path: '/',
+        })
+        return 1;
+      }
     }
     catch (error) {
       console.log(error);
     }
-  }
+
+    return -1;
+}
+
+

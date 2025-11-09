@@ -23,7 +23,7 @@ import { AspectRatio } from "./ui/aspect-ratio"
 import { Field, FieldDescription, FieldGroup, FieldLabel, FieldSeparator, FieldSet } from "./ui/field"
 import { toast } from "sonner"
 
-export default function AddImages({collection, images, setImages} : {collection: string, images: ImageType[], setImages: React.Dispatch<React.SetStateAction<ImageType[]>>}) {
+export default function AddImages({token, collection, images, setImages} : {token: string, collection: string, images: ImageType[], setImages: React.Dispatch<React.SetStateAction<ImageType[]>>}) {
 
 
   const [files, setFiles] = useState<File[]>([]);
@@ -49,12 +49,13 @@ export default function AddImages({collection, images, setImages} : {collection:
     for (const file of files) {
       formData.append('files', file, file.name);
     }
-    formData.append('num_photos', `${images.length}`); 
+    formData.append('num_photos', `${images.length}`);
 
     try {
       const response = await axios.post(`${baseURL}/photos/${collection}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${token}`
         },
         onUploadProgress: (progressEvent) => {
           const percentage = Math.round((progressEvent.loaded * 100) / (progressEvent.total || 1));
