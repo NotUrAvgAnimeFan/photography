@@ -33,7 +33,7 @@ export default function HomeCollection() {
 
   return (
     <div className="flex flex-col items-center p-8 w-full">
-      <div className="flex justify-between items-center w-full sm:w-3/4 mb-8">
+      <div className="flex justify-center items-center w-full sm:w-3/4 mb-8">
         <h1 className="text-3xl font-bold">Ricardo's Portfolio</h1>
       </div>
       <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
