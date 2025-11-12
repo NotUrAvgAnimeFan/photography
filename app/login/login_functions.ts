@@ -1,5 +1,6 @@
 'use server'
 
+import { baseURL } from '@/lib/types';
 import axios from 'axios';
 import {cookies} from 'next/headers'
 
@@ -15,7 +16,7 @@ export default async function loginAction(username: string, password: string) {
     let config = {
       method: 'post',
       maxBodyLength: Infinity,
-      url: 'http://localhost:3000/auth/login',
+      url: `${baseURL}/auth/login`,
       headers: {
         'Content-Type': 'application/json'
       },

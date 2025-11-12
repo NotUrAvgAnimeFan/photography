@@ -1,4 +1,5 @@
 
+import { baseURL } from '@/lib/types';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
@@ -12,7 +13,7 @@ export default async function OwnerLayout({children} : { children: React.ReactNo
   let config = {
     method: 'get',
     maxBodyLength: Infinity,
-    url: 'http://localhost:3000/valid',
+    url: `${baseURL}/valid`,
     headers: {
       'Authorization': `Bearer ${token}`
     }

@@ -7,6 +7,7 @@ import { Dropzone, DropzoneContent, DropzoneEmptyState } from '@/components/ui/s
 import axios from 'axios';
 import { toast } from 'sonner';
 import { AspectRatio } from '@radix-ui/react-aspect-ratio';
+import { baseURL } from '@/lib/types';
 
 
 export default function Page() {
@@ -37,7 +38,7 @@ export default function Page() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/photos', formData, {
+      const response = await axios.post(`${baseURL}/photos`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

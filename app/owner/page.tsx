@@ -62,7 +62,6 @@ export default function OwnerPage() {
         "name": collectionName
       });
       const response = await axios.request(delConfig);
-      console.log(response.data);
       setCollections(collections.filter((collection) => collection.name !== collectionName));
     } catch (error) {
       console.log(error);
@@ -79,8 +78,9 @@ export default function OwnerPage() {
       <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {collections.map((collection) => (
           <ContextMenu key={collection.name}>
-            <Link href={`/owner/${collection.name.replaceAll(' ', '_')}`}>
+
               <ContextMenuTrigger>
+                <Link href={`/owner/${collection.name.replaceAll(' ', '_')}`}>
                 <CardContent  className="bg-stone-200 rounded-lg hover:shadow">
                   <AspectRatio ratio={1/1}>
                     <Image src={collection.cover_photo} alt={`${collection.name} Collection`} fill className="object-contain"/>
@@ -90,13 +90,14 @@ export default function OwnerPage() {
                     <p className="text-xs 3xl:text-base">{collection.num_photos} Photos</p>
                   </div>
                 </CardContent>
+                </Link>
               </ContextMenuTrigger>
               <ContextMenuContent>
                 <ContextMenuItem onSelect={() => handleDeleteCollection(collection.name)}>
                   Delete Collection
                 </ContextMenuItem>
               </ContextMenuContent>
-            </Link>
+
           </ContextMenu>
         ))}
       </div>

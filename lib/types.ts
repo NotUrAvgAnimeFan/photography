@@ -25,4 +25,5 @@ export interface Collection {
   description?: string;
 }
 
-export const baseURL = 'http://localhost:3000';
+// export const baseURL = 'http://localhost:3000';
+export const baseURL = 'https://nestjs-photography-api-g8fxagg3h7craucj.canadaeast-01.azurewebsites.net';
