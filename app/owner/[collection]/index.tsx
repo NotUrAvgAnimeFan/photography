@@ -38,7 +38,8 @@ export default function OwnerSingleCollection({
     maxBodyLength: Infinity,
     url: `${baseURL}/photos/`,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
     },
     data: ''
   };
