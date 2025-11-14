@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import AddImages from '@/components/addImages';
 import { ContextMenu, ContextMenuContent, ContextMenuItem, ContextMenuTrigger } from '@/components/ui/context-menu';
 import getToken from '../get_token';
+import {toast} from 'sonner'
 
 
 export default function OwnerSingleCollection({
@@ -37,6 +38,17 @@ export default function OwnerSingleCollection({
     method: 'delete',
     maxBodyLength: Infinity,
     url: `${baseURL}/photos/`,
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    data: ''
+  };
+
+  let updateCoverConfig = {
+    method: 'put',
+    maxBodyLength: Infinity,
+    url: `${baseURL}/collections/cover`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${token}`
@@ -79,6 +91,21 @@ export default function OwnerSingleCollection({
     }
   }
 
+  const handleSetCoverImage = async(cover_photo: string) => {
+    updateCoverConfig.data = JSON.stringify({
+      "name": collectionName,
+      "cover_photo": cover_photo
+    });
+
+    try {
+      const response = await axios.request(updateCoverConfig);
+      toast("New Cover Image Set");
+    } catch(error) {
+      console.log(error);
+    }
+
+  }
+
   return (
     <div className="relative flex flex-col items-center p-4 w-full">
       <div className="text-xl md:text-2xl lg:text-4xl font-bold pt-2 pb-4">
@@ -93,6 +120,9 @@ export default function OwnerSingleCollection({
               </AspectRatio>
             </ContextMenuTrigger>
             <ContextMenuContent>
+              <ContextMenuItem onSelect={() => handleSetCoverImage(image.url)}>
+                Set cover image
+              </ContextMenuItem>
               <ContextMenuItem onSelect={() => handleDeleteImage(image.name)}>
                 Delete
               </ContextMenuItem>

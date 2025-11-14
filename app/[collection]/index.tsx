@@ -43,7 +43,7 @@ export default function CollectionImages({
       <div className="text-xl md:text-2xl lg:text-4xl font-bold pt-2 pb-4">
         "{collectionName}"
       </div>
-      <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:gird-cols-4 lg:grid-cols-5 gap-6">
+      <div className="w-full xl:w-5/6 3xl:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 3xl:grid-cols-6 gap-4">
         {images.map((image) => (
           <AspectRatio key={image.name} ratio={1/1} className="bg-stone-300 hover:shadow-lg">
             <Image src={image.url} alt={`${image.name} photo`} fill className="object-contain p-2" quality={100} />

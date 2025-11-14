@@ -33,21 +33,19 @@ export default function HomeCollection() {
 
   return (
     <div className="flex flex-col items-center p-8 w-full">
-      <div className="flex justify-center items-center w-full sm:w-3/4 mb-8">
-        <h1 className="text-3xl font-bold">Ricardo's Photography Portfolio</h1>
+      <div className="flex flex-col justify-center items-center w-full sm:w-3/4 mb-8">
+        <h1 className="sm:text-3xl font-bold">Ricardo's Photography Portfolio</h1>
+        <p className="sm:text-xl mt-2">Click on the collections below to see more</p>
       </div>
-      <div className="w-full sm:w-3/4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <div className="w-full xl:w-3/4 3xl:w-1/2 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
         {collections.map((collection) => (
-          <Link href={`/${collection.name.replaceAll(' ', '_')}`} key={collection.name}>
-            <CardContent  className="bg-stone-200 rounded-lg hover:shadow-xl">
-              <AspectRatio ratio={1/1}>
-                <Image src={collection.cover_photo} alt={`${collection.name} Collection`} fill className="object-contain"/>
-              </AspectRatio>
-              <div className="items-center pb-2 xl:pb-6 text-center">
-                <p className="text-sm 3xl:text-lg font-bold truncate px-2">{collection.name}</p>
-                <p className="text-xs 3xl:text-base">{collection.num_photos} Photos</p>
+          <Link href={`/${collection.name.replaceAll(' ', '_')}`} key={collection.name} className="group cursor-pointer">
+            <AspectRatio ratio={1/1} className="bg-black rounded-xs hover:shadow-xl">
+              <Image src={collection.cover_photo} alt={`${collection.name} Collection`} fill className="object-contain p-2 transition-opacity duration-300 opacity-50 sm:opacity-100 group-hover:opacity-50"/>
+              <div className="absolute inset-0 flex items-center justify-center text-white text-xs sm:text-xl font-bold opacity-100 sm:opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {collection.name}
               </div>
-            </CardContent>
+            </AspectRatio>
           </Link>
         ))}
       </div>
